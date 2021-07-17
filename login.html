@@ -40,6 +40,7 @@
         border:solid 1px dodgerblue;
         cursor:pointer;
     }
+   
     #btn{
         margin:10px 70px;
     }
@@ -49,12 +50,14 @@
       <div class="container">
           <h2>Login Form</h2>
             <form role='form' onsubmit = "return logval()" action='dashboard.html' method='POST'>
-                <div class='form-group'>
-                    <input type='text' id='logname' name='logname' placeholder='your name' required>
-                </div>
-                <div class='form-group'>
-                    <input type='password' id='logpassword' name='logpassword' placeholder='Password' required>
-                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="logname" placeholder="mail id">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="logpass" placeholder="password">
+                  </div>
                 <div class='form-group'>
                     <button id='logbtn' type='submit'>Login</button>
                 </div>
@@ -68,18 +71,18 @@
     var loguser = document.getElementById('logname');
     var logpass = document.getElementById('logpassword');
   function logval(){
-      var flag = 0;
-    for(let j=0;j<localStorage.length;j++){
-           
-        const  checkname = localStorage.key(j);
-        const checkpass = localStorage.getItem(checkname);
-          if(loguser.value == checkname && logpass.value == checkpass){
-                     flag=1;
-                     return true;
-          }
-    }
-    if(flag==0){
-          alert("Username/password don't exist");
+      var flag = 1;
+      for(let i=0;i<JSON.parse(localStorage.getItem('details')).length;i++){
+                                            const oldmail = JSON.parse(localStorage.getItem('details'))[i].id;
+                                            const pass = JSON.parse(localStorage.getItem('details'))[i].pass;
+                                            if(oldmail == loguser.value && pass== logpass.value){
+                                                                        
+                                                                        flag=0;
+                                                                        return true;
+                                            }
+                                        }
+    if(flag==1){
+        alert("mailid/password don't match");
           return false;
     }
 }
