@@ -21,31 +21,53 @@
     }
 
     #bootstrapbtn{
-        margin:20px 400px;
+        margin:20px 720px;
+        height: 40px;
+        width:100px;
+        
         
     }
-    fieldset{
-        text-align:center;
+    #bootstrapbtn:hover{
+        background-color:#4b41db;
+        transition: 0.2s;
+        color:white;
     }
+    fieldset {
+        text-align: center;
+    }
+   #legends{
+       text-align: center;
+       
+   }
+    table, td {
+  border: 3px solid black;
+}
+   th{
+    width:100px;
+       border: 3px solid black;
+   }
     #display{
-        margin:10px 360px;
+        margin:10px 580px;
+       
     }
 </style>
 <body>
-      <label>You loggedin Successfully!!</label>
+      
 
       <fieldset>
-        <legend>Logged in Local Storage</legend>
+        <legend id='legends'>User Details</legend>
         <table id='display'>
             <tr>
-                <th>Name</th>
-                <th>Password</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+
             </tr>
     </table>
 
     </fieldset>
     
-    <a class='btn btn-info' id='bootstrapbtn' href='signup.html' role='button'>Home</a>
+    <a class='btn btn-info' id='bootstrapbtn' href='signup.html' role='button'>Log out</a>
 </body>
 
 <script>
@@ -55,19 +77,21 @@
        
 
 
-       for (let i=1;i<=localStorage.length;i++){
-          const  n1 = localStorage.key(i);
-          const pass1 = localStorage.getItem(n1);
-      
+       for (let i=1;i<=JSON.parse(localStorage.getItem('details')).length;i++){
+          const  n1 = JSON.parse(localStorage.getItem('details'))[i].firstname;
+          const pass1 = JSON.parse(localStorage.getItem('details'))[i].pass;
+          const pass2 = JSON.parse(localStorage.getItem('details'))[i].id;
 
           
 
             var newrow = display.insertRow(i);
             var cell1 =  newrow.insertCell(0);
             var cell2 = newrow.insertCell(1);
+            var cell3 = newrow.insertCell(2);
 
             cell1.innerHTML = n1;
             cell2.innerHTML = pass1;
+            cell3.innerHTML = pass2;
        }
    </script>
 </html>
