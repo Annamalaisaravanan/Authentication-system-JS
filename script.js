@@ -1,51 +1,70 @@
  function validate(){
- var username = document.getElementById('name');
+ var fname = document.getElementById('name');
+ var lname = document.getElementById('last');
+ var email =document.getElementById('email');
  var password = document.getElementById('password');
 
- numbers = /[0-9]/g;
- uppercase= /[A-Z]/g;
- lowercase = /[a-z]/g;
 
+numbers = /[0-9]/g;
+upper = /[A-Z]/g;
+lower =/[a-z]/g;
 
- if(username.value == "" || password.value == ""){
-     alert('No blank spaces are allowed');
-     return false;
- }
- else if(password.value.length<=4){
-     alert('Password is too weak');
-     return false;
- }
- else if(!password.value.match(numbers)){
-     alert('Password contain atleast 1 number');
-     return false;
- }
- else if(!password.value.match(uppercase)){
-     alert('Password contain atleast one Capital letter');
-     return false;
- }
- else if(!password.value.match(lowercase)){
-     alert('Password contain atleast one small letter');
-     return false;
- }
+if(fname.value=='' || email.value=='' || password.value=='' || lname.value==''){
+       alert('please enter all the fields');
+       return false;
+}
+
+else if(password.value.length<=5){
+   alert('password must be greater than 5');
+   return false;
+}
+else if(!password.value.match(numbers)){
+    alert('password must contain atleast 1 number');
+    return false;
+}
+else if(!password.value.match(lower)){
+    alert('password must contain atleast 1 lowercase letter');
+    return false;
+}
+else if(!password.value.match(upper)){
+    alert('password must contain atleast 1 uppercase letter');
+    return false;
+}
  else{
-      
-      var flag =1;
-      for (let i=0;i<localStorage.length;i++){
-                    const  n1 = localStorage.key(i);
-                    const pass1 = localStorage.getItem(n1);
-                    if(n1 == username.value){
-                        alert('Username Alerady Exist..Try with another name');
-                        flag =0;
-                        return false;
-                    }
-      if(flag==1){
-          localStorage.setItem(username.value,password.value);
-          return true;
-      }   
-     }
-      
-      
+ var details =[];
+
+ if(JSON.parse(localStorage.getItem('details'))){
+        details = JSON.parse(localStorage.getItem('details'));
  }
- }
+let user ={
+      firstname: fname.value,
+      lastname: lname.value,
+      id: email.value,
+      pass: password.value
+}
+var flag=1;
+if(JSON.parse(localStorage.getItem('details')).length==0){
+    details.push(user);
+    localStorage.setItem('details',JSON.stringify(details));
+}
+else{
+    for(let i=0;i<JSON.parse(localStorage.getItem('details')).length;i++){
+                                            const oldmail = JSON.parse(localStorage.getItem('details'))[i].id;
+                                            if(oldmail == email.value){
+                                                                        alert('Mail id already exist');
+                                                                        flag=0;
+                                                                        return false;
+                                            }
+                                        }
+                                    if(flag==1){
+                                            details.push(user);
+                                            localStorage.setItem('details',JSON.stringify(details));
+                                            return true;
+                                        }
+    
+}
 
 
+}
+
+}
